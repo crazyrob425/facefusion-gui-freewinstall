@@ -53,8 +53,10 @@ if (Test-CommandExists "git") {
     if ($InstallGit -or $InstallAll) {
         Write-Host "Installing Git..." -ForegroundColor Yellow
         
-        # Download Git installer
-        $gitUrl = "https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe"
+        # Download Git installer - use latest version
+        # Note: This URL redirects to the latest version
+        $gitUrl = "https://github.com/git-for-windows/git/releases/latest/download/Git-2.43.0-64-bit.exe"
+        Write-Host "Note: Using Git version 2.43.0. Check https://git-scm.com/ for latest version." -ForegroundColor Yellow
         $gitInstaller = "$env:TEMP\git-installer.exe"
         
         try {
@@ -68,6 +70,7 @@ if (Test-CommandExists "git") {
             Remove-Item $gitInstaller -ErrorAction SilentlyContinue
         } catch {
             Write-Host "Failed to install Git: $_" -ForegroundColor Red
+            Write-Host "Please download and install manually from https://git-scm.com/" -ForegroundColor Yellow
         }
     } else {
         Write-Host "  To install Git, run: .\dependency_installer.ps1 -InstallGit" -ForegroundColor Yellow

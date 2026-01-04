@@ -18,14 +18,30 @@ try:
     import pystray
     from pystray import MenuItem as item
     from PIL import Image, ImageDraw
-except ImportError:
-    print("Required packages not installed. Installing...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pystray", "Pillow"])
-    import tkinter as tk
-    from tkinter import ttk, messagebox, scrolledtext
-    import pystray
-    from pystray import MenuItem as item
-    from PIL import Image, ImageDraw
+except ImportError as e:
+    print("=" * 60)
+    print("Missing Required Packages")
+    print("=" * 60)
+    print(f"Error: {e}")
+    print()
+    print("Installing required packages: pystray and Pillow...")
+    print("This may take a moment...")
+    print()
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "pystray", "Pillow"])
+        print()
+        print("Installation successful! Please restart the launcher.")
+        print()
+        sys.exit(0)
+    except subprocess.CalledProcessError as install_error:
+        print()
+        print("ERROR: Failed to install required packages.")
+        print(f"Details: {install_error}")
+        print()
+        print("Please install manually:")
+        print("  pip install pystray Pillow")
+        print()
+        sys.exit(1)
 
 
 class FaceFusionLauncher:
@@ -257,21 +273,22 @@ class FaceFusionLauncher:
             self.log_console(f"Command: {' '.join(cmd)}")
             self.log_console(f"Accelerator: {self.config['accelerator']}")
             
-            # Start process with hidden window on Windows
-            startupinfo = None
+            # Prepare process startup options
+            popen_kwargs = {
+                'stdout': subprocess.PIPE,
+                'stderr': subprocess.PIPE,
+                'env': env,
+                'cwd': str(facefusion_dir)
+            }
+            
+            # Hide window on Windows
             if sys.platform == 'win32':
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 startupinfo.wShowWindow = subprocess.SW_HIDE
+                popen_kwargs['startupinfo'] = startupinfo
             
-            self.server_process = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                startupinfo=startupinfo,
-                env=env,
-                cwd=str(facefusion_dir)
-            )
+            self.server_process = subprocess.Popen(cmd, **popen_kwargs)
             
             self.server_running = True
             self.update_ui_state()

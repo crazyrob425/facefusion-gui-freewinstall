@@ -3,12 +3,19 @@ Build script for creating Windows executable
 Uses PyInstaller to create standalone launcher executable
 """
 
-import PyInstaller.__main__
 import sys
 from pathlib import Path
 
 def build_launcher():
     """Build the launcher executable"""
+    
+    # Import PyInstaller only when needed
+    try:
+        import PyInstaller.__main__
+    except ImportError:
+        print("PyInstaller not found. Please install it first:")
+        print("  pip install pyinstaller")
+        sys.exit(1)
     
     script_dir = Path(__file__).parent
     launcher_script = script_dir / "launcher.py"
@@ -48,6 +55,14 @@ def build_launcher():
 
 def build_installer_wizard():
     """Build the installer wizard executable"""
+    
+    # Import PyInstaller only when needed
+    try:
+        import PyInstaller.__main__
+    except ImportError:
+        print("PyInstaller not found. Please install it first:")
+        print("  pip install pyinstaller")
+        sys.exit(1)
     
     script_dir = Path(__file__).parent
     wizard_script = script_dir / "install_wizard.py"
@@ -108,13 +123,4 @@ def build_all():
         sys.exit(1)
 
 if __name__ == "__main__":
-    # Check if PyInstaller is installed
-    try:
-        import PyInstaller
-    except ImportError:
-        print("PyInstaller not found. Installing...")
-        import subprocess
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
-        import PyInstaller
-    
     build_all()
