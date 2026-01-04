@@ -1,0 +1,6 @@
+# Windows Installer Requirements
+# Additional packages needed for the GUI launcher and installer
+
+pystray>=0.19.5
+Pillow>=10.0.0
+pywin32>=306
