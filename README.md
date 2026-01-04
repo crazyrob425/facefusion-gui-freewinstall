@@ -17,6 +17,28 @@ Preview
 Installation
 ------------
 
+### Windows Professional Installer (Recommended for Windows Users)
+
+**Easy one-click installation with GUI launcher!** 🚀
+
+For Windows users, we now offer a professional GUI installer that handles everything automatically:
+- ✅ Automated Git, Conda, and FFmpeg installation
+- ✅ Hardware accelerator detection (NVIDIA, AMD, Intel)
+- ✅ Desktop and Start Menu shortcuts
+- ✅ GUI launcher with system tray integration
+- ✅ One-click server management (start/stop/restart)
+- ✅ Easy uninstaller
+
+**Quick Start:**
+1. Navigate to the `windows_installer` folder
+2. Run `python install_wizard.py` or build the installer with Inno Setup
+3. Follow the installation wizard
+4. Launch FaceFusion from desktop shortcut or Start Menu
+
+See [Windows Installer Documentation](windows_installer/README.md) for detailed instructions and [Quick Start Guide](windows_installer/QUICK_START.md) for getting started.
+
+### Manual Installation
+
 Be aware, the [installation](https://docs.facefusion.io/installation) needs technical skills and is not recommended for beginners. In case you are not comfortable using a terminal, our [Windows Installer](http://windows-installer.facefusion.io) and [macOS Installer](http://macos-installer.facefusion.io) get you started.
 
 

@@ -1,0 +1,23 @@
+# Build artifacts
+build/
+dist/
+output/
+*.exe
+*.spec
+
+# PyInstaller
+*.manifest
+*.pyc
+__pycache__/
+
+# Temporary files
+*.tmp
+*.log
+
+# Downloaded installers
+*-installer.exe
+*-installer.msi
+*.zip
+
+# User-specific files
+install_config.txt
